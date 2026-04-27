@@ -119,13 +119,28 @@ FinSight is a **seven-stage modular pipeline**. Each stage serializes its output
 
 Labels are derived from a **multi-horizon weighted return score**, not a single forward day (which is susceptible to exogenous macro noise):
 
-$$S_i = 0.60 \cdot r_{i,T+1} + 0.25 \cdot r_{i,T+2} + 0.15 \cdot r_{i,T+3}$$
+$$
+S_i = 0.60 \cdot r_{i,T+1} + 0.25 \cdot r_{i,T+2} + 0.15 \cdot r_{i,T+3}
+$$
 
 The weighted score is thresholded by market type:
 
-$$y_i = \begin{cases} \text{BUY} & \text{if } S_i > \tau_m \\ \text{SELL} & \text{if } S_i < -\tau_m \\ \text{HOLD} & \text{otherwise} \end{cases}, \quad \tau_m = \begin{cases} 1.00\% & \text{US equities} \\ 0.75\% & \text{India NSE} \end{cases}$$
+$$
+y_i = \begin{cases}
+\text{BUY} & \text{if } S_i > \tau_m \\\\
+\text{SELL} & \text{if } S_i < -\tau_m \\\\
+\text{HOLD} & \text{otherwise}
+\end{cases},
+\quad
+\tau_m = \begin{cases}
+1.00\% & \text{US equities} \\\\
+0.75\% & \text{India NSE}
+\end{cases}
+$$
 
-A **T+0 anchor rule** prevents look-ahead bias at the timezone boundary: for US equities with pre-market timestamps, the same calendar day close is used; for Indian equities, the next trading day close is used.
+A **T+0 anchor rule** prevents look-ahead bias at the timezone boundary:  
+- For US equities with pre-market timestamps, the same calendar day close is used.  
+- For Indian equities, the next trading day close is used.
 
 ---
 
